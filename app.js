@@ -1,8 +1,10 @@
 //jshint esversion: 6
+//SERVER 
 //import of npm packages
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
+const https = require("https");
 
 //Server setup
 const app = express();
@@ -21,13 +23,51 @@ app.get("/", function(req, res) {
 
 //Post route created... path home and callback function
 app.post("/", function(req, res) {
-    let firstName = req.body.fName;
-    let lastName = req.body.lName;
-    let email= req.body.email;
+    const firstName = req.body.fName;
+    const lastName = req.body.lName;
+    const email= req.body.email;
 
-    console.log(firstName, lastName, email);
+//Subscriber info using mailchimp API data structure
+ const data = {
+    members: [
+        {
+            email_address: email,
+            status: "subscribed",
+            merge_fields: {
+                FNAME: firstName,
+                LNAME: lastName
+            }
+        }
+    ]
+};
+
+const jsonData = JSON.stringify(data);
+
+const url = "https://us19.api.mailchimp.com/3.0/lists/e8efbe5690"
+
+const options = {
+    method: "POST",
+    auth: "john:00269b94bd732ccc5cccb89af661a367-us19"
+
+}
+
+//Request made
+const request = https.request(url, options, function(response) {
+    response.on("data", function(data){
+        console.log(JSON.parse(data));
+    })
 })
+
+
+request.write(jsonData);
+request.end();
+
+});
 
 app.listen(3000, function() {
     console.log("Server is running on port 3000");
 });
+
+//APIKEY
+//00269b94bd732ccc5cccb89af661a367-us19
+//LIST ID - e8efbe5690
