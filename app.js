@@ -5,6 +5,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 const https = require("https");
+const { response } = require("express");
 
 //Server setup
 const app = express();
@@ -13,8 +14,8 @@ const app = express();
 app.use(express.static("public"));
 
 //Use of bodyparser or express
-// app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
+// app.use(express.urlencoded({ extended: true }));
 
 //send the file signup html
 app.get("/", function(req, res) {
@@ -58,8 +59,14 @@ const request = https.request(url, options, function(response) {
     })
 })
 
+//Response message
+if (response.statusCode === 200) {
+    res.sendFile(__dirname + "/success.html");
+} else {
+    res.sendFile(__dirname + "/failure.html");
+}
 
-request.write(jsonData);
+// request.write(jsonData);
 request.end();
 
 });
