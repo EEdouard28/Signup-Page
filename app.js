@@ -65,13 +65,18 @@ if (response.statusCode === 200) {
 } else {
     res.sendFile(__dirname + "/failure.html");
 }
-
-// request.write(jsonData);
+// failure page not working
+request.write(jsonData);
 request.end();
 
 });
 
-app.listen(3000, function() {
+//failure route.. redirects user to HOME PAGE
+app.post("/failure", function(req, rest) {
+    res.redirect("/")
+});
+
+app.listen(process.env.PORT || 3000, function() {
     console.log("Server is running on port 3000");
 });
 
