@@ -28,6 +28,7 @@ body {
 
 .middle {
     border-radius: 0px;
+    margin-bottom: -1px;
 }
 .bottom {
   margin-bottom: 10px;

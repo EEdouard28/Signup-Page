@@ -68,30 +68,30 @@
 
     
     <!-- Custom styles for this template -->
-    <link href="styles.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
   </head>
 
   <body class="text-center">
     
 <main class="form-signin w-100 m-auto">
-  <form>
-    <img class="mb-4" src="./images/logo-g0c7ae4781_640.png" alt="" width="72" height="57">
+  <form action="/" class="form-signin" method="POST">
+    <img class="mb-4" src="images/logo-g0c7ae4781_640.png" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Sign up to our newsletter</h1>
 
     <div class="form-floating">
-      <input type="text" class="form-control top" id="floatingInput" placeholder="First Name">
+      <input type="text" name="fName"  class="form-control top" id="floatingInput" placeholder="First Name">
       <label for="floatingInput">First Name</label>
     </div>
     <div class="form-floating">
-      <input type="text" class="form-control middle" id="floatingInput" placeholder="Last Name">
+      <input type="text" name="lName" class="form-control middle" id="floatingInput" placeholder="Last Name">
       <label for="floatingInput">Last Name</label>
     </div>
       <div class="form-floating">
-      <input type="email" class="form-control bottom" id="floatingEmail" placeholder="Email">
+      <input type="email"  name="email" class="form-control bottom" id="floatingEmail" placeholder="Email">
       <label for="floatingPassword">Email</label>
     </div>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Me Up</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Me Up!</button>
     <p class="mt-5 mb-3 text-muted">Evince Edouard</p>
   </form>
 </main>
