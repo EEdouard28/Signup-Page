@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 //send the file signup html
 app.get("/", function(req, res) {
-    res.sendFile(__dirname + "/signup.html")
+    res.sendFile(__dirname + "/index.html")
 })
 
 //Post route created... path home and callback function
@@ -49,7 +49,6 @@ const url = "https://us19.api.mailchimp.com/3.0/lists/e8efbe5690"
 const options = {
     method: "POST",
     auth: "john:00269b94bd732ccc5cccb89af661a367-us19"
-
 }
 
 //Request made
@@ -79,7 +78,3 @@ app.post("/failure", function(req, rest) {
 app.listen(process.env.PORT || 3000, function() {
     console.log("Server is running on port 3000");
 });
-
-//APIKEY
-//00269b94bd732ccc5cccb89af661a367-us19
-//LIST ID - e8efbe5690
