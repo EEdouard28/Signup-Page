@@ -11,7 +11,7 @@ const { response } = require("express");
 const app = express();
 
 //Path of local static files
-app.use(express.static("public"));
+app.use(express.static("docs"));
 
 //Use of bodyparser or express
 app.use(bodyParser.urlencoded({extended: true}));
