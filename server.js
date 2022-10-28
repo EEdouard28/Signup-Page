@@ -1,5 +1,5 @@
 //jshint esversion: 6
-//SERVER 
+//SERVER
 //import of npm packages
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -10,71 +10,69 @@ const { response } = require("express");
 //Server setup
 const app = express();
 
+//Use of bodyparser or express
+app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
+
 //Path of local static files
 app.use(express.static("public"));
 
-//Use of bodyparser or express
-app.use(bodyParser.urlencoded({extended: true}));
-// app.use(express.urlencoded({ extended: true }));
-
 //send the file signup html
-app.get("/", function(req, res) {
-    res.sendFile(__dirname + "/index.html")
-})
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/index.html");
+});
 
 //Post route created... path home and callback function
-app.post("/", function(req, res) {
-    const firstName = req.body.fName;
-    const lastName = req.body.lName;
-    const email= req.body.email;
+app.post("/", function (req, res) {
+  const firstName = req.body.fName;
+  const lastName = req.body.lName;
+  const email = req.body.email;
 
-//Subscriber info using mailchimp API data structure
- const data = {
+  //Subscriber info using mailchimp API data structure
+  const data = {
     members: [
-        {
-            email_address: email,
-            status: "subscribed",
-            merge_fields: {
-                FNAME: firstName,
-                LNAME: lastName
-            }
-        }
-    ]
-};
+      {
+        email_address: email,
+        status: "subscribed",
+        merge_fields: {
+          FNAME: firstName,
+          LNAME: lastName,
+        },
+      },
+    ],
+  };
 
-const jsonData = JSON.stringify(data);
+  const jsonData = JSON.stringify(data);
 
-const url = "https://us19.api.mailchimp.com/3.0/lists/e8efbe5690"
+  const url = "https://us19.api.mailchimp.com/3.0/lists/e8efbe5690";
 
-const options = {
+  const options = {
     method: "POST",
-    auth: "john:00269b94bd732ccc5cccb89af661a367-us19"
-}
+    auth: "john:00269b94bd732ccc5cccb89af661a367-us19",
+  };
 
-//Request made
-const request = https.request(url, options, function(response) {
-    response.on("data", function(data){
-        console.log(JSON.parse(data));
-    })
-})
+  //Request made
+  const request = https.request(url, options, function (response) {
+    response.on("data", function (data) {
+      console.log(JSON.parse(data));
+    });
+  });
 
-//Response message
-if (response.statusCode === 200) {
+  //Response message
+  if (response.statusCode === 200) {
     res.sendFile(__dirname + "/success.html");
-} else {
+  } else {
     res.sendFile(__dirname + "/failure.html");
-}
-// failure page not working
-request.write(jsonData);
-request.end();
-
+  }
+  // failure page not working
+  request.write(jsonData);
+  request.end();
 });
 
-//failure route.. redirects user to HOME PAGE
-app.post("/failure", function(req, rest) {
-    res.redirect("/")
+app.post("/failure", function (req, res) {
+  res.redirect("/");
 });
 
-app.listen(process.env.PORT || 3000, function() {
-    console.log("Server is running on port 3000");
+app.listen(process.env.PORT || 3000, function () {
+  console.log("Server is running on port 3000");
 });
